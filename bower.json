@@ -1,0 +1,13 @@
+{
+  "name": "learn-react",
+  "version": "0.0.0",
+  "homepage": "https://github.com/IsaacLean/learn-react",
+  "authors": [
+    "Matthew Isaac Lean <isaaclean@creatibyte.com>"
+  ],
+  "license": "N/A",
+  "dependencies": {
+    "normalize-css": "normalize.css#~3.0.3",
+    "react": "~0.13.3"
+  }
+}
