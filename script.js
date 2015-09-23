@@ -1,12 +1,22 @@
-var data = [
-  {name: 'Pesto Chicken', desc: 'grilled chicken, monterey jack cheese, roasted red peppers, tomato, mixed greens, pesto'},
-  {name: 'Bay Shrimp Melt', desc: 'bay shrimp salad, monterey jack cheese, tomato, avocado'},
-  {name: 'Margherita al Fresco', desc: 'mozzarella, tomato, pesto, balsamic vinaigrette'}
-];
-
 var ProductList = React.createClass({
+	getInitialState: function() {
+		return {data: []};
+	},
+	componentDidMount: function() {
+		$.ajax({
+			url: this.props.url,
+			dataType: 'json',
+			cache: false,
+			success: function(data) {
+				this.setState({data: data});
+			}.bind(this),
+			error: function(xhr, status, err) {
+				console.log(this.props.url, status, err.toString());
+			}.bind(this)
+		});
+	},
 	render: function() {
-		var productNodes = this.props.data.map(function (product) {
+		var productNodes = this.state.data.map(function (product) {
 			return (
 				<Product name={product.name}>
 					{product.desc}
@@ -33,6 +43,6 @@ var Product = React.createClass({
 });
 
 React.render(
-	<ProductList data={data}/>,
+	<ProductList url="products.json"/>,
 	document.getElementById('menu')
 );
