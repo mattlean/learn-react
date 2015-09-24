@@ -1,3 +1,23 @@
+var Header = React.createClass({
+	render: function() {
+		return (
+			<div id="header">
+				<h1>React Restaurant Menu</h1>
+			</div>
+		);
+	}
+});
+
+var Content = React.createClass({
+	render: function() {
+		return (
+			<div id="content">
+				<ProductList url="products.json"/>
+			</div>
+		);
+	}
+});
+
 var ProductList = React.createClass({
 	getInitialState: function() {
 		return {data: []};
@@ -56,6 +76,9 @@ var ProductFilter = React.createClass({
 });
 
 React.render(
-	<ProductList url="products.json"/>,
-	document.getElementById('content')
+	<div id="wrapper">
+		<Header />
+		<Content />
+	</div>,
+	document.querySelector('body')
 );
