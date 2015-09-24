@@ -326,6 +326,7 @@ var PaymentPage = React.createClass({
 	render: function() {
 		return (
 			<div id="payment-page" className="fit">
+				<div id="page-header"><h1>Payment</h1></div>
 				<PaymentForm navToPage={this.props.navToPage} />
 			</div>
 		);
@@ -417,15 +418,17 @@ var PlaceOrderPage = React.createClass({
 
 		return (
 			<div id="place-order-page" className="fit">
-				<h1>Review Your Order</h1>
-				<h2>You ordered...</h2>
-				<OrderList orders={this.state.orders} />
-				<h2>We are delivering to...</h2>
-				<p>{this.state.name} at {this.state.phone} at the following address at {this.state.time}:</p>
-				<p>{address}, {this.state.city}, {this.state.region}, {this.state.zip}</p>
-				<h2>You are paying with...</h2>
-				<p>{this.state.card}</p>
-				<PrevBtn href="/payment" navToPage={this.props.navToPage} />
+				<div id="page-header"><h1>Review Your Order</h1></div>
+				<div id="order-summary">
+					<h2>You ordered...</h2>
+					<OrderList orders={this.state.orders} />
+					<h2>We are delivering to...</h2>
+					<p>{this.state.name} at {this.state.phone} at the following address at {this.state.time}:</p>
+					<p>{address}, {this.state.city}, {this.state.region}, {this.state.zip}</p>
+					<h2>You are paying with...</h2>
+					<p>{this.state.card}</p>
+					<PrevBtn href="/payment" navToPage={this.props.navToPage} />
+				</div>
 			</div>
 		);
 	}

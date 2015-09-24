@@ -42,12 +42,13 @@ noscript div {
 .fit {
 	max-width: $fit-width;
 	margin: 0 auto;
-	padding: 10px;
+	padding: 0;
+	background-color: #fafafa;
 }
 
 #page-header {
 	margin-top: 30px;
-	padding: 10px 20px;
+	padding: 10px 30px;
 	background-color: #303038;
 	color: #fefefe;
 }
@@ -56,9 +57,13 @@ noscript div {
 /* MAIN HEADER */
 #header {
 	height: 70px;
-	line-height: 50px;
+	line-height: 70px;
 	background-color: #d03737;
 	color: #fefefe;
+}
+
+#header .fit {
+	background-color: transparent;
 }
 
 #header h1 {
@@ -68,12 +73,7 @@ noscript div {
 
 
 /* MENU PAGE */
-#menu-page #page-header {
-	margin-top: 20px;
-	padding-left: 30px;
-}
-
-#product-list, #delivery-page ul {
+#product-list {
 	padding-left: 0;
 	list-style-type: none;
 }
@@ -112,4 +112,22 @@ noscript div {
 #delivery-page {
 	padding: 0;
 	background-color: #fafafa;
+}
+
+#delivery-page ul {
+	padding-left: 0;
+	list-style-type: none;
+}
+
+
+/* PAYMENT PAGE */
+#payment-page {
+	padding: 0;
+	background-color: #fafafa;
+}
+
+
+/* PLACE ORDER PAGE */
+#order-summary {
+	padding: 0 30px 20px;
 }
