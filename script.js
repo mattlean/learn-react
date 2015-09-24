@@ -260,8 +260,6 @@ var DeliveryForm = React.createClass({
 	formValidate: function(event) {
 		event.preventDefault();
 		if (event.target.checkValidity()) {
-			console.log('valid');
-			console.log(this.props.navToPage);
 			this.props.navToPage();
 		}
 	},
@@ -326,14 +324,30 @@ var DeliveryForm = React.createClass({
 
 /** PAYMENT PAGE **/
 var PaymentPage = React.createClass({
+	render: function() {
+		return (
+			<div id="payment-page" className="fit">
+				<PaymentForm navToPage={this.props.navToPage} />
+			</div>
+		);
+	}
+});
+
+var PaymentForm = React.createClass({
 	cardSelect: function(event) {
 		localStorage.setItem('card', event.target.value)
 	},
 
+	formValidate: function(event) {
+		event.preventDefault();
+		if (event.target.checkValidity()) {
+			this.props.navToPage();
+		}
+	},
+
 	render: function() {
 		return (
-			<div id="payment-page" className="fit">
-				<h1>Payment</h1>
+			<form onSubmit={this.formValidate}>
 				<table>
 					<thead>
 						<tr>
@@ -344,25 +358,25 @@ var PaymentPage = React.createClass({
 					</thead>
 					<tbody>
 						<tr>
-							<td><input type="radio" value="Visa 1234" name="card" onClick={this.cardSelect} />Visa ending in 1234</td>
+							<td><input type="radio" value="Visa 1234" name="card" onClick={this.cardSelect} required />Visa ending in 1234</td>
 							<td>Peregrine Robinson</td>
 							<td>01/2020</td>
 						</tr>
 						<tr>
-							<td><input type="radio" value="Mastercard 4567" name="card" onClick={this.cardSelect} />Mastercard ending in 4567</td>
+							<td><input type="radio" value="Mastercard 4567" name="card" onClick={this.cardSelect} required />Mastercard ending in 4567</td>
 							<td>Peregrine Robinson</td>
 							<td>01/2020</td>
 						</tr>
 						<tr>
-							<td><input type="radio" value="Discover 8901" name="card" onClick={this.cardSelect} />Discover ending in 8901</td>
+							<td><input type="radio" value="Discover 8901" name="card" onClick={this.cardSelect} required />Discover ending in 8901</td>
 							<td>Peregrine Robinson</td>
 							<td>01/2020</td>
 						</tr>
 					</tbody>
 				</table>
-				<PrevBtn href="/delivery" navToPage={this.props.navToPage} />
-				<NextBtn href="/placeorder" navToPage={this.props.navToPage} />
-			</div>
+				<PrevBtn navToPage={this.props.navToPage} />
+				<input type="submit" value="Next &raquo;" />
+			</form>
 		);
 	}
 });
@@ -397,6 +411,11 @@ var PlaceOrderPage = React.createClass({
 	},
 
 	render: function() {
+		var address = this.state.addressLine1;
+		if(this.state.addressLine2 != '') {
+			address += ', ' + this.state.addressLine2;
+		}
+
 		return (
 			<div id="place-order-page" className="fit">
 				<h1>Review Your Order</h1>
@@ -404,7 +423,7 @@ var PlaceOrderPage = React.createClass({
 				<OrderList orders={this.state.orders} />
 				<h2>We are delivering to...</h2>
 				<p>{this.state.name} at {this.state.phone} at the following address at {this.state.time}:</p>
-				<p>{this.state.addressLine1}, {this.state.addressLine2}, {this.state.city}, {this.state.region}, {this.state.zip}</p>
+				<p>{address}, {this.state.city}, {this.state.region}, {this.state.zip}</p>
 				<h2>You are paying with...</h2>
 				<p>{this.state.card}</p>
 				<PrevBtn href="/payment" navToPage={this.props.navToPage} />
@@ -427,8 +446,6 @@ var OrderList = React.createClass({
 				orderArray.push(newObject);
 			}
 		}
-
-		console.log(orderArray);
 
 		var orderNodes = orderArray.map(function (order) {
 			return (
