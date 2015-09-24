@@ -1,3 +1,23 @@
+/*** GENERAL COMPONENTS ***/
+// Button that moves to next page
+var NextBtn = React.createClass({
+	render: function() {
+		return (
+			<a href="#" className="button" onClick={this.props.nextPage}>Next &raquo;</a>
+		);
+	}
+});
+
+var PrevBtn = React.createClass({
+	render: function() {
+		return (
+			<a href="#" className="button" onClick={this.props.prevPage}>&laquo; Prev</a>
+		);
+	}
+});
+
+/*** CORE COMPONENTS ***/
+// The top header area of the page
 var Header = React.createClass({
 	render: function() {
 		return (
@@ -10,23 +30,49 @@ var Header = React.createClass({
 	}
 });
 
+// The content area of the page
 var Content = React.createClass({
+	getInitialState: function() {
+		return {currPage: <MenuPage nextPage={this.nextPage} />};
+	},
+
+	nextPage: function() {
+		this.setState({currPage: <DeliveryPage prevPage={this.prevPage} />});
+	},
+
+	prevPage: function() {
+		this.setState({currPage: <MenuPage nextPage={this.nextPage} />});
+	},
+
 	render: function() {
 		return (
 			<div id="content">
-				<div className="fit">
-					<ProductList url="products.json"/>
-				</div>
+				{this.state.currPage}
 			</div>
 		);
 	}
 });
 
+
+/*** MENU PAGE COMPONENTS ***/
+var MenuPage = React.createClass({
+	render: function() {
+		return (
+			<div className="fit">
+				<ProductList url="products.json" />
+				<NextBtn nextPage={this.props.nextPage} />
+			</div>
+		);
+	}
+});
+
+// The list of products
 var ProductList = React.createClass({
 	getInitialState: function() {
 		return {data: []};
 	},
 
+	// Download the products from server's JSON through AJAX
 	componentDidMount: function() {
 		$.ajax({
 			url: this.props.url,
@@ -58,11 +104,14 @@ var ProductList = React.createClass({
 	}
 });
 
+// An individual product
 var Product = React.createClass({
 	getInitialState: function() {
 		var initIsOrdered = localStorage.getItem(this.props.name);
 		var initHighlightState = '';
 
+		// Load the stored values from localStorage,
+		// otherwise start every product as unhighlighted
 		if(initIsOrdered === 'true') {
 			initIsOrdered = true;
 			initHighlightState = 'highlight';
@@ -76,7 +125,8 @@ var Product = React.createClass({
 		};
 	},
 
-	handleClick: function(event) {
+	// Controls style of button depending on its highlightState
+	highlightCtrl: function(event) {
 		this.setState({isOrdered: !this.state.isOrdered}, function() {
 			if(this.state.isOrdered) {
 				this.setState({highlightState: 'highlight'});
@@ -90,7 +140,7 @@ var Product = React.createClass({
 
 	render: function() {
 		return (
-			<li className={this.state.highlightState} onClick={this.handleClick}>
+			<li className={this.state.highlightState} onClick={this.highlightCtrl}>
 				<h2>{this.props.name}</h2>
 				<p>{this.props.desc}</p>
 			</li>
@@ -98,6 +148,7 @@ var Product = React.createClass({
 	}
 });
 
+// Filter that shows and hides products
 var ProductFilter = React.createClass({
 	render: function() {
 		return (
@@ -107,6 +158,20 @@ var ProductFilter = React.createClass({
 		);
 	}
 });
+
+
+/*** DELIVERY PAGE COMPONENTS ***/
+var DeliveryPage = React.createClass({
+	render: function() {
+		return (
+			<div className="fit">
+				<p>Hello world!</p>
+				<PrevBtn prevPage={this.props.prevPage} />
+			</div>
+		);
+	}
+});
+
 
 React.render(
 	<div id="wrapper">

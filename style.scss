@@ -1,5 +1,14 @@
+$fit-width: 960px;
+
+noscript div {
+	width: $fit-width;
+	margin: 0 auto;
+	font-weight: bold;
+	text-align: center;
+}
+
 .fit {
-	width: 960px;
+	width: $fit-width;
 	margin: 0 auto;
 }
 
