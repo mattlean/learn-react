@@ -126,15 +126,16 @@ var ProductList = React.createClass({
 // An individual product
 var Product = React.createClass({
 	getInitialState: function() {
-		var initIsOrdered = localStorage.getItem(this.props.name);
+		var orders = JSON.parse(localStorage.getItem('orders'));
 		var initHighlightState = '';
+		var initIsOrdered = false;
 
 		// Load the stored values from localStorage if there are any
-		if(initIsOrdered === 'true') {
-			initIsOrdered = true;
-			initHighlightState = 'highlight';
-		} else {
-			initIsOrdered = false;
+		if(orders !== null && orders[this.props.name] !== undefined) {
+			if(orders[this.props.name].ordered) {
+				initIsOrdered = true;
+				initHighlightState = 'highlight';
+			}
 		}
 
 		return {
@@ -152,7 +153,15 @@ var Product = React.createClass({
 				this.setState({highlightState: ''});
 			}
 
-			localStorage.setItem(this.props.name, this.state.isOrdered);
+			// Creates JSON object to store all orders
+			var orders = JSON.parse(localStorage.getItem('orders'));
+
+			if(orders === null) {
+				orders = {};
+			}
+
+			orders[this.props.name] = {'ordered': this.state.isOrdered};
+			localStorage.setItem('orders', JSON.stringify(orders));
 		});
 	},
 
@@ -190,7 +199,7 @@ var DeliveryPage = React.createClass({
 		var initState = localStorage.getItem('state');
 		var initZip = localStorage.getItem('zip');
 
-		if(initName === undefined) {
+		/*if(initName === undefined) {
 			initName = '';
 		}
 		
@@ -216,7 +225,7 @@ var DeliveryPage = React.createClass({
 
 		if(initZip === undefined) {
 			initZip= '';
-		}
+		}*/
 
 		return {
 			name: initName,
@@ -338,6 +347,7 @@ var PaymentPage = React.createClass({
 /** PLACE ORDER PAGE **/
 var PlaceOrderPage = React.createClass({
 	getInitialState: function() {
+		var initOrders = JSON.parse(localStorage.getItem('orders'));
 		var initName = localStorage.getItem('name');
 		var initPhone = localStorage.getItem('phone');
 		var initAddressLine1 = localStorage.getItem('address-line-1');
@@ -348,7 +358,12 @@ var PlaceOrderPage = React.createClass({
 		var initTime = localStorage.getItem('time');
 		var initCard = localStorage.getItem('card');
 
+		for(var order in initOrders) {
+			console.log(order);
+		}
+
 		return {
+			orders: initOrders,
 			name: initName,
 			phone: initPhone,
 			addressLine1: initAddressLine1,
