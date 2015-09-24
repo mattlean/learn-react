@@ -1,19 +1,15 @@
 /*** GENERAL COMPONENTS ***/
 // Button that moves to next page
 var NextBtn = React.createClass({
-	formValidate: function(event) {
+	navToPage: function(event) {
 		event.preventDefault();
-		if (event.target.checkValidity()) {
-			console.log('valid');
-			console.log(this.props.navToPage);
-			this.props.navToPage();
-		}
+		this.props.navToPage();
 	},
 
 	render: function() {
 		return (
-			<form onSubmit={this.formValidate}>
-				<input type="submit" />
+			<form onSubmit={this.navToPage}>
+				<input type="submit" value="Next &raquo;" />
 			</form>
 		);
 	}
@@ -23,102 +19,6 @@ var PrevBtn = React.createClass({
 	render: function() {
 		return (
 			<button onClick={this.props.navToPage}>&laquo; Prev</button>
-		);
-	}
-});
-
-var ValidForm = React.createClass({
-	getInitialState: function() {
-		// Load the stored values from localStorage if there are any
-		var initName = localStorage.getItem('name');
-		var initPhone = localStorage.getItem('phone');
-		var initAddressLine1 = localStorage.getItem('address-line-1');
-		var initAddressLine2 = localStorage.getItem('address-line-2');
-		var initCity = localStorage.getItem('city');
-		var initState = localStorage.getItem('state');
-		var initZip = localStorage.getItem('zip');
-
-		return {
-			name: initName,
-			phone: initPhone,
-			addressLine1: initAddressLine1,
-			addressLine2: initAddressLine2,
-			city: initCity,
-			region: initState,
-			zip: initZip
-		};
-	},
-
-	addressSet: function(event) {
-		localStorage.setItem(event.target.name, event.target.value);
-	},
-
-	timeSelect: function(event) {
-		localStorage.setItem('time', event.target.value);
-	},
-
-	formValidate: function(event) {
-		event.preventDefault();
-		if (event.target.checkValidity()) {
-			console.log('valid');
-			console.log(this.props.navToPage);
-			this.props.navToPage();
-		}
-	},
-
-	render: function() {
-		return (
-			<form onSubmit={this.formValidate}>
-				<h1>Delivery</h1>
-				<h2>Who do we contact?</h2>
-				<label>
-					Name:
-					<input type="text" name="name" onChange={this.addressSet} defaultValue={this.state.name} required />
-				</label>
-				<label> 
-					Phone Number:
-					<input type="tel" name="phone" onChange={this.addressSet} defaultValue={this.state.phone} />
-				</label>
-				<h2>Where do you want your food?</h2>
-				<label>
-					Address line 1:
-					<input type="text" name="address-line-1" onChange={this.addressSet} defaultValue={this.state.addressLine1} />
-				</label>
-				<label>
-					Address line 2:
-					<input type="text" name="address-line-2" onChange={this.addressSet} defaultValue={this.state.addressLine2} />
-				</label>
-				<label>
-					City:
-					<input type="text" name="city" onChange={this.addressSet} defaultValue={this.state.city} />
-				</label>
-				<label>
-					State:
-					<input type="text" name="state" onChange={this.addressSet} defaultValue={this.state.region} />
-				</label>
-				<label>
-					ZIP
-					<input type="text" name="zip" onChange={this.addressSet} defaultValue={this.state.zip} />
-				</label>
-				<h2>When do you want your food?</h2>
-				<ul>
-					<li>
-						<label>
-							<input type="radio" value="ASAP" name="delivery-time" onClick={this.timeSelect} />
-							<p>As soon as possible!</p>
-						</label>
-					</li>
-					<li>
-						<label>
-							<input type="radio" value="set-time" name="delivery-time" onClick={this.timeSelect} />
-							<input type="date" />
-							<input type="time" />
-						</label>
-					</li>
-				</ul>
-				<PrevBtn navToPage={this.props.navToPage} />
-				<input type="submit" />
-			</form>
 		);
 	}
 });
@@ -150,11 +50,10 @@ var Content = React.createClass({
 		var currPath = location.pathname;
 		var newPath = '';
 
-		console.log('called');
-
 		if(event !== undefined) {
-			console.log('called1');
 			event.preventDefault();
+
+			// Navigate prev
 			for(var path in shopPaths) {
 				if(currPath === shopPaths[3]) {
 					this.setState({currPage: <PaymentPage navToPage={this.navToPage} />});
@@ -171,7 +70,6 @@ var Content = React.createClass({
 				}
 			}
 		} else {
-			console.log('called2');
 			// Navigate next
 			for(var path in shopPaths) {
 				if(currPath === shopPaths[0]) {
@@ -323,8 +221,104 @@ var DeliveryPage = React.createClass({
 	render: function() {
 		return (
 			<div id="delivery-page" className="fit">
-				<ValidForm navToPage={this.props.navToPage} />
+				<DeliveryForm navToPage={this.props.navToPage} />
 			</div>
+		);
+	}
+});
+
+var DeliveryForm = React.createClass({
+	getInitialState: function() {
+		// Load the stored values from localStorage if there are any
+		var initName = localStorage.getItem('name');
+		var initPhone = localStorage.getItem('phone');
+		var initAddressLine1 = localStorage.getItem('address-line-1');
+		var initAddressLine2 = localStorage.getItem('address-line-2');
+		var initCity = localStorage.getItem('city');
+		var initState = localStorage.getItem('state');
+		var initZip = localStorage.getItem('zip');
+
+		return {
+			name: initName,
+			phone: initPhone,
+			addressLine1: initAddressLine1,
+			addressLine2: initAddressLine2,
+			city: initCity,
+			region: initState,
+			zip: initZip
+		};
+	},
+
+	addressSet: function(event) {
+		localStorage.setItem(event.target.name, event.target.value);
+	},
+
+	timeSelect: function(event) {
+		localStorage.setItem('time', event.target.value);
+	},
+
+	formValidate: function(event) {
+		event.preventDefault();
+		if (event.target.checkValidity()) {
+			console.log('valid');
+			console.log(this.props.navToPage);
+			this.props.navToPage();
+		}
+	},
+
+	render: function() {
+		return (
+			<form onSubmit={this.formValidate}>
+				<h1>Delivery</h1>
+				<h2>Who do we contact?</h2>
+				<label>
+					Name:
+					<input type="text" name="name" onChange={this.addressSet} defaultValue={this.state.name} required />
+				</label>
+				<label> 
+					Phone Number:
+					<input type="tel" name="phone" onChange={this.addressSet} defaultValue={this.state.phone} required />
+				</label>
+				<h2>Where do you want your food?</h2>
+				<label>
+					Address line 1:
+					<input type="text" name="address-line-1" onChange={this.addressSet} defaultValue={this.state.addressLine1} required />
+				</label>
+				<label>
+					Address line 2:
+					<input type="text" name="address-line-2" onChange={this.addressSet} defaultValue={this.state.addressLine2} />
+				</label>
+				<label>
+					City:
+					<input type="text" name="city" onChange={this.addressSet} defaultValue={this.state.city} required />
+				</label>
+				<label>
+					State:
+					<input type="text" name="state" onChange={this.addressSet} defaultValue={this.state.region} required />
+				</label>
+				<label>
+					ZIP
+					<input type="number" name="zip" onChange={this.addressSet} defaultValue={this.state.zip} required />
+				</label>
+				<h2>When do you want your food?</h2>
+				<ul>
+					<li>
+						<label>
+							<input type="radio" value="ASAP" name="delivery-time" onClick={this.timeSelect} required />
+							<p>As soon as possible!</p>
+						</label>
+					</li>
+					<li>
+						<label>
+							<input type="radio" value="set-time" name="delivery-time" onClick={this.timeSelect} required />
+							<input type="date" />
+							<input type="time" />
+						</label>
+					</li>
+				</ul>
+				<PrevBtn navToPage={this.props.navToPage} />
+				<input type="submit" value="Next &raquo;" />
+			</form>
 		);
 	}
 });
