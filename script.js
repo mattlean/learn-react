@@ -1,9 +1,20 @@
 /*** GENERAL COMPONENTS ***/
 // Button that moves to next page
 var NextBtn = React.createClass({
+	formValidate: function(event) {
+		event.preventDefault();
+		if (event.target.checkValidity()) {
+			console.log('valid');
+			console.log(this.props.navToPage);
+			this.props.navToPage();
+		}
+	},
+
 	render: function() {
 		return (
-			<a href={this.props.href} className="button" onClick={this.props.navToPage}>Next &raquo;</a>
+			<form onSubmit={this.formValidate}>
+				<input type="submit" />
+			</form>
 		);
 	}
 });
@@ -11,7 +22,103 @@ var NextBtn = React.createClass({
 var PrevBtn = React.createClass({
 	render: function() {
 		return (
-			<a href={this.props.href} className="button" onClick={this.props.navToPage}>&laquo; Prev</a>
+			<button onClick={this.props.navToPage}>&laquo; Prev</button>
+		);
+	}
+});
+
+var ValidForm = React.createClass({
+	getInitialState: function() {
+		// Load the stored values from localStorage if there are any
+		var initName = localStorage.getItem('name');
+		var initPhone = localStorage.getItem('phone');
+		var initAddressLine1 = localStorage.getItem('address-line-1');
+		var initAddressLine2 = localStorage.getItem('address-line-2');
+		var initCity = localStorage.getItem('city');
+		var initState = localStorage.getItem('state');
+		var initZip = localStorage.getItem('zip');
+
+		return {
+			name: initName,
+			phone: initPhone,
+			addressLine1: initAddressLine1,
+			addressLine2: initAddressLine2,
+			city: initCity,
+			region: initState,
+			zip: initZip
+		};
+	},
+
+	addressSet: function(event) {
+		localStorage.setItem(event.target.name, event.target.value);
+	},
+
+	timeSelect: function(event) {
+		localStorage.setItem('time', event.target.value);
+	},
+
+	formValidate: function(event) {
+		event.preventDefault();
+		if (event.target.checkValidity()) {
+			console.log('valid');
+			console.log(this.props.navToPage);
+			this.props.navToPage();
+		}
+	},
+
+	render: function() {
+		return (
+			<form onSubmit={this.formValidate}>
+				<h1>Delivery</h1>
+				<h2>Who do we contact?</h2>
+				<label>
+					Name:
+					<input type="text" name="name" onChange={this.addressSet} defaultValue={this.state.name} required />
+				</label>
+				<label> 
+					Phone Number:
+					<input type="tel" name="phone" onChange={this.addressSet} defaultValue={this.state.phone} />
+				</label>
+				<h2>Where do you want your food?</h2>
+				<label>
+					Address line 1:
+					<input type="text" name="address-line-1" onChange={this.addressSet} defaultValue={this.state.addressLine1} />
+				</label>
+				<label>
+					Address line 2:
+					<input type="text" name="address-line-2" onChange={this.addressSet} defaultValue={this.state.addressLine2} />
+				</label>
+				<label>
+					City:
+					<input type="text" name="city" onChange={this.addressSet} defaultValue={this.state.city} />
+				</label>
+				<label>
+					State:
+					<input type="text" name="state" onChange={this.addressSet} defaultValue={this.state.region} />
+				</label>
+				<label>
+					ZIP
+					<input type="text" name="zip" onChange={this.addressSet} defaultValue={this.state.zip} />
+				</label>
+				<h2>When do you want your food?</h2>
+				<ul>
+					<li>
+						<label>
+							<input type="radio" value="ASAP" name="delivery-time" onClick={this.timeSelect} />
+							<p>As soon as possible!</p>
+						</label>
+					</li>
+					<li>
+						<label>
+							<input type="radio" value="set-time" name="delivery-time" onClick={this.timeSelect} />
+							<input type="date" />
+							<input type="time" />
+						</label>
+					</li>
+				</ul>
+				<PrevBtn navToPage={this.props.navToPage} />
+				<input type="submit" />
+			</form>
 		);
 	}
 });
@@ -37,29 +144,53 @@ var Content = React.createClass({
 		return {currPage: <MenuPage navToPage={this.navToPage} />};
 	},
 
+	// Controls page navigation on next or prev button press
 	navToPage: function(event) {
-		event.preventDefault();
-
 		var shopPaths = ['/', '/delivery', '/payment', '/placeorder'];
-		var newPath = event.target.pathname;
+		var currPath = location.pathname;
+		var newPath = '';
 
-		history.pushState(null,null,newPath);
+		console.log('called');
 
-		for(var path in shopPaths) {
-			if(newPath === shopPaths[0]) {
-				this.setState({currPage: <MenuPage navToPage={this.navToPage} />});
-				break;
-			} else if(newPath === shopPaths[1]) {
-				this.setState({currPage: <DeliveryPage navToPage={this.navToPage} />});
-				break;
-			} else if(newPath === shopPaths[2]) {
-				this.setState({currPage: <PaymentPage navToPage={this.navToPage} />});
-				break;
-			} else if(newPath === shopPaths[3]) {
-				this.setState({currPage: <PlaceOrderPage navToPage={this.navToPage} />});
-				break;
+		if(event !== undefined) {
+			console.log('called1');
+			event.preventDefault();
+			for(var path in shopPaths) {
+				if(currPath === shopPaths[3]) {
+					this.setState({currPage: <PaymentPage navToPage={this.navToPage} />});
+					newPath = shopPaths[2];
+					break;
+				} else if(currPath === shopPaths[2]) {
+					this.setState({currPage: <DeliveryPage navToPage={this.navToPage} />});
+					newPath = shopPaths[1];
+					break;
+				} else if(currPath === shopPaths[1]) {
+					this.setState({currPage: <MenuPage navToPage={this.navToPage} />});
+					newPath = shopPaths[0];
+					break;
+				}
+			}
+		} else {
+			console.log('called2');
+			// Navigate next
+			for(var path in shopPaths) {
+				if(currPath === shopPaths[0]) {
+					this.setState({currPage: <DeliveryPage navToPage={this.navToPage} />});
+					newPath = shopPaths[1];
+					break;
+				} else if(currPath === shopPaths[1]) {
+					this.setState({currPage: <PaymentPage navToPage={this.navToPage} />});
+					newPath = shopPaths[2];
+					break;
+				} else if(currPath === shopPaths[2]) {
+					this.setState({currPage: <PlaceOrderPage navToPage={this.navToPage} />});
+					newPath = shopPaths[3];
+					break;
+				}
 			}
 		}
+
+		history.pushState(null,null,newPath);
 	},
 
 	render: function() {
@@ -189,112 +320,10 @@ var ProductFilter = React.createClass({
 
 /*** DELIVERY PAGE ***/
 var DeliveryPage = React.createClass({
-	getInitialState: function() {
-		// Load the stored values from localStorage if there are any
-		var initName = localStorage.getItem('name');
-		var initPhone = localStorage.getItem('phone');
-		var initAddressLine1 = localStorage.getItem('address-line-1');
-		var initAddressLine2 = localStorage.getItem('address-line-2');
-		var initCity = localStorage.getItem('city');
-		var initState = localStorage.getItem('state');
-		var initZip = localStorage.getItem('zip');
-
-		/*if(initName === undefined) {
-			initName = '';
-		}
-		
-		if(initPhone === undefined) {
-			initPhone = '';
-		}
-
-		if(initAddressLine1 === undefined) {
-			initAddressLine1 = '';
-		}
-
-		if(initAddressLine2 === undefined) {
-			initAddressLine1 = '';
-		}
-		
-		if(initCity === undefined) {
-			initCity = '';
-		}
-		
-		if(initState === undefined) {
-			initState = '';
-		}
-
-		if(initZip === undefined) {
-			initZip= '';
-		}*/
-
-		return {
-			name: initName,
-			phone: initPhone,
-			addressLine1: initAddressLine1,
-			addressLine2: initAddressLine2,
-			city: initCity,
-			region: initState,
-			zip: initZip
-		};
-	},
-	addressSet: function(event) {
-		localStorage.setItem(event.target.name, event.target.value);
-	},
-	timeSelect: function(event) {
-		localStorage.setItem('time', event.target.value);
-	},
 	render: function() {
 		return (
 			<div id="delivery-page" className="fit">
-				<h1>Delivery</h1>
-				<h2>Who do we contact?</h2>
-				<label>
-					Name:
-					<input type="text" name="name" onChange={this.addressSet} defaultValue={this.state.name} />
-				</label>
-				<label> 
-					Phone Number:
-					<input type="tel" name="phone" onChange={this.addressSet} defaultValue={this.state.phone} />
-				</label>
-				<h2>Where do you want your food?</h2>
-				<label>
-					Address line 1:
-					<input type="text" name="address-line-1" onChange={this.addressSet} defaultValue={this.state.addressLine1} />
-				</label>
-				<label>
-					Address line 2:
-					<input type="text" name="address-line-2" onChange={this.addressSet} defaultValue={this.state.addressLine2} />
-				</label>
-				<label>
-					City:
-					<input type="text" name="city" onChange={this.addressSet} defaultValue={this.state.city} />
-				</label>
-				<label>
-					State:
-					<input type="text" name="state" onChange={this.addressSet} defaultValue={this.state.region} />
-				</label>
-				<label>
-					ZIP
-					<input type="text" name="zip" onChange={this.addressSet} defaultValue={this.state.zip} />
-				</label>
-				<h2>When do you want your food?</h2>
-				<ul>
-					<li>
-						<label>
-							<input type="radio" value="ASAP" name="delivery-time" onClick={this.timeSelect} />
-							<p>As soon as possible!</p>
-						</label>
-					</li>
-					<li>
-						<label>
-							<input type="radio" value="set-time" name="delivery-time" onClick={this.timeSelect} />
-							<input type="date" />
-							<input type="time" />
-						</label>
-					</li>
-				</ul>
-				<PrevBtn href="/" navToPage={this.props.navToPage} />
-				<NextBtn href="/payment" navToPage={this.props.navToPage} />
+				<ValidForm navToPage={this.props.navToPage} />
 			</div>
 		);
 	}
@@ -306,6 +335,7 @@ var PaymentPage = React.createClass({
 	cardSelect: function(event) {
 		localStorage.setItem('card', event.target.value)
 	},
+
 	render: function() {
 		return (
 			<div id="payment-page" className="fit">
@@ -389,8 +419,7 @@ var PlaceOrderPage = React.createClass({
 	}
 });
 
-
-// The list of products
+// The list of orders
 var OrderList = React.createClass({
 	render: function() {
 		orderArray = [];
@@ -420,7 +449,7 @@ var OrderList = React.createClass({
 	}
 });
 
-// An individual product
+// An individual order
 var Order = React.createClass({
 	render: function() {
 		return (
