@@ -181,13 +181,42 @@ var ProductFilter = React.createClass({
 
 /*** DELIVERY PAGE ***/
 var DeliveryPage = React.createClass({
+	getInitialState: function() {
+		var setAddressLine1 = 'foo';
+		return {addressLine1: setAddressLine1};
+	},
+	addressSet: function(event) {
+		localStorage.setItem(event.target.name, event.target.value);
+	},
 	deliverySelect: function(event) {
-		localStorage.setItem('delivery', event.target.value)
+		localStorage.setItem('delivery', event.target.value);
 	},
 	render: function() {
 		return (
 			<div id="delivery-page" className="fit">
-				<h1>When do you want your food?</h1>
+				<h1>Delivery</h1>
+				<h2>Where do you want your food?</h2>
+				<label>
+					Address line 1:
+					<input type="text" name="address-line-1" onKeyUp={this.addressSet} value={this.state.addressLine1} />
+				</label>
+				<label>
+					Address line 2:
+					<input type="text" name="address-line-2" onKeyUp={this.addressSet} />
+				</label>
+				<label>
+					City:
+					<input type="text" name="city" onKeyUp={this.addressSet} />
+				</label>
+				<label>
+					State:
+					<input type="text" name="state" onKeyUp={this.addressSet} />
+				</label>
+				<label>
+					ZIP
+					<input type="text" name="zip" onKeyUp={this.addressSet} />
+				</label>
+				<h2>When do you want your food?</h2>
 				<ul>
 					<li>
 						<label>
@@ -219,7 +248,7 @@ var PaymentPage = React.createClass({
 	render: function() {
 		return (
 			<div id="payment-page" className="fit">
-				<h1>Select a payment method.</h1>
+				<h1>Payment</h1>
 				<table>
 					<thead>
 						<tr>
@@ -259,7 +288,10 @@ var PlaceOrderPage = React.createClass({
 	render: function() {
 		return (
 			<div id="place-order-page" className="fit">
-				<h1>Review your order.</h1>
+				<h1>Review Your Order</h1>
+				<h2>Ordered Items</h2>
+				<h2>Delivery</h2>
+				<h2>Payment</h2>
 				<PrevBtn href="/payment" navToPage={this.props.navToPage} />
 			</div>
 		);
