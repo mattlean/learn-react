@@ -24,8 +24,11 @@ var ProductList = React.createClass({
 			);
 		});
 		return (
-			<div className="product-list">
-				{productNodes}
+			<div id="menu">
+				<ProductFilter />
+				<div className="product-list">
+					{productNodes}
+				</div>
 			</div>
 		);
 	}
@@ -42,7 +45,17 @@ var Product = React.createClass({
 	}
 });
 
+var ProductFilter = React.createClass({
+	render: function() {
+		return (
+			<div className="product-filter">
+				<input placeholder="Search for food items..."></input>
+			</div>
+		);
+	}
+});
+
 React.render(
 	<ProductList url="products.json"/>,
-	document.getElementById('menu')
+	document.getElementById('content')
 );

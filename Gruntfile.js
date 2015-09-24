@@ -6,12 +6,14 @@ module.exports = function(grunt) {
 			dev: {
 				port: 9000
 			}
-		}
+		},
 	});
 
 	//Load plugins
 	grunt.loadNpmTasks('grunt-http-server');
+	grunt.loadNpmTasks('grunt-contrib-watch');
 
 	//Tasks
 	grunt.registerTask('default', ['http-server']);
+	grunt.registerTask('serve', ['http-server']);
 };
