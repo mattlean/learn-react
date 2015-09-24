@@ -105,8 +105,8 @@ var Content = React.createClass({
 var MenuPage = React.createClass({
 	render: function() {
 		return (
-			<div className="fit">
-				<h1>Menu</h1>
+			<div id="menu-page" className="fit">
+				<div id="page-header"><h1>Menu</h1></div>
 				<ProductList url="products.json" />
 				<NextBtn href="delivery" navToPage={this.props.navToPage} />
 			</div>
@@ -143,7 +143,6 @@ var ProductList = React.createClass({
 		});
 		return (
 			<div id="menu">
-				<ProductFilter />
 				<ul id="product-list">
 					{productNodes}
 				</ul>
@@ -221,6 +220,7 @@ var DeliveryPage = React.createClass({
 	render: function() {
 		return (
 			<div id="delivery-page" className="fit">
+				<div id="page-header"><h1>Delivery</h1></div>
 				<DeliveryForm navToPage={this.props.navToPage} />
 			</div>
 		);
@@ -267,7 +267,6 @@ var DeliveryForm = React.createClass({
 	render: function() {
 		return (
 			<form onSubmit={this.formValidate}>
-				<h1>Delivery</h1>
 				<h2>Who do we contact?</h2>
 				<label>
 					Name:
