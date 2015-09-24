@@ -145,7 +145,7 @@ var Product = React.createClass({
 	},
 
 	// Controls style of button depending on its highlightState
-	highlightCtrl: function(event) {
+	highlightCtrl: function() {
 		this.setState({isOrdered: !this.state.isOrdered}, function() {
 			if(this.state.isOrdered) {
 				this.setState({highlightState: 'highlight'});
@@ -181,6 +181,9 @@ var ProductFilter = React.createClass({
 
 /*** DELIVERY PAGE ***/
 var DeliveryPage = React.createClass({
+	deliverySelect: function(event) {
+		localStorage.setItem('delivery', event.target.value)
+	},
 	render: function() {
 		return (
 			<div id="delivery-page" className="fit">
@@ -188,13 +191,13 @@ var DeliveryPage = React.createClass({
 				<ul>
 					<li>
 						<label>
-							<input type="radio" name="delivery-time" />
+							<input type="radio" value="asap" name="delivery-time" onClick={this.deliverySelect} />
 							<p>As soon as possible!</p>
 						</label>
 					</li>
 					<li>
 						<label>
-							<input type="radio" name="delivery-time" />
+							<input type="radio" value="set-time" name="delivery-time" onClick={this.deliverySelect} />
 							<input type="date" />
 							<input type="time" />
 						</label>
@@ -210,6 +213,9 @@ var DeliveryPage = React.createClass({
 
 /** PAYMENT PAGE **/
 var PaymentPage = React.createClass({
+	cardSelect: function(event) {
+		localStorage.setItem('card', event.target.value)
+	},
 	render: function() {
 		return (
 			<div id="payment-page" className="fit">
@@ -224,7 +230,17 @@ var PaymentPage = React.createClass({
 					</thead>
 					<tbody>
 						<tr>
-							<td>Visa ending in 1234</td>
+							<td><input type="radio" value="Visa 1234" name="card" onClick={this.cardSelect} />Visa ending in 1234</td>
+							<td>Peregrine Robinson</td>
+							<td>01/2020</td>
+						</tr>
+						<tr>
+							<td><input type="radio" value="Mastercard 4567" name="card" onClick={this.cardSelect} />Mastercard ending in 4567</td>
+							<td>Peregrine Robinson</td>
+							<td>01/2020</td>
+						</tr>
+						<tr>
+							<td><input type="radio" value="Discover 8901" name="card" onClick={this.cardSelect} />Discover ending in 8901</td>
 							<td>Peregrine Robinson</td>
 							<td>01/2020</td>
 						</tr>
