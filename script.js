@@ -358,10 +358,6 @@ var PlaceOrderPage = React.createClass({
 		var initTime = localStorage.getItem('time');
 		var initCard = localStorage.getItem('card');
 
-		for(var order in initOrders) {
-			console.log(order);
-		}
-
 		return {
 			orders: initOrders,
 			name: initName,
@@ -381,13 +377,54 @@ var PlaceOrderPage = React.createClass({
 			<div id="place-order-page" className="fit">
 				<h1>Review Your Order</h1>
 				<h2>You ordered...</h2>
+				<OrderList orders={this.state.orders} />
 				<h2>We are delivering to...</h2>
-				<p>{this.state.name} at {this.state.phone} at the following address:</p>
+				<p>{this.state.name} at {this.state.phone} at the following address at {this.state.time}:</p>
 				<p>{this.state.addressLine1}, {this.state.addressLine2}, {this.state.city}, {this.state.region}, {this.state.zip}</p>
 				<h2>You are paying with...</h2>
 				<p>{this.state.card}</p>
 				<PrevBtn href="/payment" navToPage={this.props.navToPage} />
 			</div>
+		);
+	}
+});
+
+
+// The list of products
+var OrderList = React.createClass({
+	render: function() {
+		orderArray = [];
+
+		for(var order in this.props.orders) {
+			if(this.props.orders[order].ordered === true) {
+				var newObject = {
+					'name': order,
+					'data': this.props.orders[order]
+				};
+				orderArray.push(newObject);
+			}
+		}
+
+		console.log(orderArray);
+
+		var orderNodes = orderArray.map(function (order) {
+			return (
+				<Order name={order.name} />
+			);
+		});
+		return (
+			<ul id="order-list">
+				{orderNodes}
+			</ul>
+		);
+	}
+});
+
+// An individual product
+var Order = React.createClass({
+	render: function() {
+		return (
+			<li>{this.props.name}</li>
 		);
 	}
 });
