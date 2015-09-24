@@ -60,22 +60,34 @@ var ProductList = React.createClass({
 
 var Product = React.createClass({
 	getInitialState: function() {
+		var initIsOrdered = localStorage.getItem(this.props.name);
+		var initHighlightState = '';
+
+		if(initIsOrdered === 'true') {
+			initIsOrdered = true;
+			initHighlightState = 'highlight';
+		} else {
+			initIsOrdered = false;
+		}
+
 		return {
-			isOrdered: false,
-			highlightState: ''
+			isOrdered: initIsOrdered,
+			highlightState: initHighlightState
 		};
 	},
 
 	handleClick: function(event) {
-		this.state.isOrdered = !this.state.isOrdered;
-		
-		if(this.state.isOrdered) {
-			this.setState({highlightState: 'highlight'});
-		} else {
-			this.setState({highlightState: ''});
-		}
+		this.setState({isOrdered: !this.state.isOrdered}, function() {
+			if(this.state.isOrdered) {
+				this.setState({highlightState: 'highlight'});
+			} else {
+				this.setState({highlightState: ''});
+			}
+
+			localStorage.setItem(this.props.name, this.state.isOrdered);
+		});
 	},
-	
+
 	render: function() {
 		return (
 			<li className={this.state.highlightState} onClick={this.handleClick}>
