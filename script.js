@@ -129,8 +129,7 @@ var Product = React.createClass({
 		var initIsOrdered = localStorage.getItem(this.props.name);
 		var initHighlightState = '';
 
-		// Load the stored values from localStorage,
-		// otherwise start every product as unhighlighted
+		// Load the stored values from localStorage if there are any
 		if(initIsOrdered === 'true') {
 			initIsOrdered = true;
 			initHighlightState = 'highlight';
@@ -182,51 +181,104 @@ var ProductFilter = React.createClass({
 /*** DELIVERY PAGE ***/
 var DeliveryPage = React.createClass({
 	getInitialState: function() {
-		var setAddressLine1 = 'foo';
-		return {addressLine1: setAddressLine1};
+		// Load the stored values from localStorage if there are any
+		var initName = localStorage.getItem('name');
+		var initPhone = localStorage.getItem('phone');
+		var initAddressLine1 = localStorage.getItem('address-line-1');
+		var initAddressLine2 = localStorage.getItem('address-line-2');
+		var initCity = localStorage.getItem('city');
+		var initState = localStorage.getItem('state');
+		var initZip = localStorage.getItem('zip');
+
+		if(initName === undefined) {
+			initName = '';
+		}
+		
+		if(initPhone === undefined) {
+			initPhone = '';
+		}
+
+		if(initAddressLine1 === undefined) {
+			initAddressLine1 = '';
+		}
+
+		if(initAddressLine2 === undefined) {
+			initAddressLine1 = '';
+		}
+		
+		if(initCity === undefined) {
+			initCity = '';
+		}
+		
+		if(initState === undefined) {
+			initState = '';
+		}
+
+		if(initZip === undefined) {
+			initZip= '';
+		}
+
+		return {
+			name: initName,
+			phone: initPhone,
+			addressLine1: initAddressLine1,
+			addressLine2: initAddressLine2,
+			city: initCity,
+			region: initState,
+			zip: initZip
+		};
 	},
 	addressSet: function(event) {
 		localStorage.setItem(event.target.name, event.target.value);
 	},
-	deliverySelect: function(event) {
-		localStorage.setItem('delivery', event.target.value);
+	timeSelect: function(event) {
+		localStorage.setItem('time', event.target.value);
 	},
 	render: function() {
 		return (
 			<div id="delivery-page" className="fit">
 				<h1>Delivery</h1>
+				<h2>Who do we contact?</h2>
+				<label>
+					Name:
+					<input type="text" name="name" onChange={this.addressSet} defaultValue={this.state.name} />
+				</label>
+				<label> 
+					Phone Number:
+					<input type="tel" name="phone" onChange={this.addressSet} defaultValue={this.state.phone} />
+				</label>
 				<h2>Where do you want your food?</h2>
 				<label>
 					Address line 1:
-					<input type="text" name="address-line-1" onKeyUp={this.addressSet} value={this.state.addressLine1} />
+					<input type="text" name="address-line-1" onChange={this.addressSet} defaultValue={this.state.addressLine1} />
 				</label>
 				<label>
 					Address line 2:
-					<input type="text" name="address-line-2" onKeyUp={this.addressSet} />
+					<input type="text" name="address-line-2" onChange={this.addressSet} defaultValue={this.state.addressLine2} />
 				</label>
 				<label>
 					City:
-					<input type="text" name="city" onKeyUp={this.addressSet} />
+					<input type="text" name="city" onChange={this.addressSet} defaultValue={this.state.city} />
 				</label>
 				<label>
 					State:
-					<input type="text" name="state" onKeyUp={this.addressSet} />
+					<input type="text" name="state" onChange={this.addressSet} defaultValue={this.state.region} />
 				</label>
 				<label>
 					ZIP
-					<input type="text" name="zip" onKeyUp={this.addressSet} />
+					<input type="text" name="zip" onChange={this.addressSet} defaultValue={this.state.zip} />
 				</label>
 				<h2>When do you want your food?</h2>
 				<ul>
 					<li>
 						<label>
-							<input type="radio" value="asap" name="delivery-time" onClick={this.deliverySelect} />
+							<input type="radio" value="ASAP" name="delivery-time" onClick={this.timeSelect} />
 							<p>As soon as possible!</p>
 						</label>
 					</li>
 					<li>
 						<label>
-							<input type="radio" value="set-time" name="delivery-time" onClick={this.deliverySelect} />
+							<input type="radio" value="set-time" name="delivery-time" onClick={this.timeSelect} />
 							<input type="date" />
 							<input type="time" />
 						</label>
@@ -285,13 +337,40 @@ var PaymentPage = React.createClass({
 
 /** PLACE ORDER PAGE **/
 var PlaceOrderPage = React.createClass({
+	getInitialState: function() {
+		var initName = localStorage.getItem('name');
+		var initPhone = localStorage.getItem('phone');
+		var initAddressLine1 = localStorage.getItem('address-line-1');
+		var initAddressLine2 = localStorage.getItem('address-line-2');
+		var initCity = localStorage.getItem('city');
+		var initState = localStorage.getItem('state');
+		var initZip = localStorage.getItem('zip');
+		var initTime = localStorage.getItem('time');
+		var initCard = localStorage.getItem('card');
+
+		return {
+			name: initName,
+			phone: initPhone,
+			addressLine1: initAddressLine1,
+			addressLine2: initAddressLine2,
+			city: initCity,
+			region: initState,
+			zip: initZip,
+			time: initTime,
+			card: initCard
+		};
+	},
+
 	render: function() {
 		return (
 			<div id="place-order-page" className="fit">
 				<h1>Review Your Order</h1>
-				<h2>Ordered Items</h2>
-				<h2>Delivery</h2>
-				<h2>Payment</h2>
+				<h2>You ordered...</h2>
+				<h2>We are delivering to...</h2>
+				<p>{this.state.name} at {this.state.phone} at the following address:</p>
+				<p>{this.state.addressLine1}, {this.state.addressLine2}, {this.state.city}, {this.state.region}, {this.state.zip}</p>
+				<h2>You are paying with...</h2>
+				<p>{this.state.card}</p>
 				<PrevBtn href="/payment" navToPage={this.props.navToPage} />
 			</div>
 		);
