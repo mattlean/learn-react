@@ -8,20 +8,35 @@ body {
 }
 
 h1 {
-	font-size: 1.76em;
 	margin: 0.5em 0;
+	font-size: 1.5em;
+	text-transform: uppercase;
 }
 
 h2 {
-	margin-bottom: 0.5em;
+	margin-bottom: 0.24em;
+	font-size: 1.24em;
+	text-transform: uppercase;
 }
 
 p {
-	margin-top: 0.8em;
+	margin-top: 0.1em;
 }
 
 ul {
 	margin: 0;
+}
+
+button, input[type='submit'] {
+	padding: 6px 8px;
+	border: none;
+	text-transform: uppercase;
+	background-color: #e74c32;
+	color: #fafafa;
+}
+
+button:hover, input[type='submit']:hover {
+	background-color: #dd622f;
 }
 
 input[type='submit'] {
@@ -49,6 +64,7 @@ noscript div {
 #page-header {
 	margin-top: 30px;
 	padding: 10px 30px;
+	text-transform: uppercase;
 	background-color: #303038;
 	color: #fefefe;
 }
@@ -67,7 +83,9 @@ noscript div {
 }
 
 #header h1 {
+	font-family: 'Montserrat', sans-serif;
 	font-size: 1.8em;
+	text-transform: uppercase;
 	margin: 0 20px;
 }
 
@@ -98,12 +116,12 @@ noscript div {
 	background-color: #fdfbd9
 }
 
-#product-list li input {
-	display: none;
+#product-list p {
+	color: #555;
 }
 
 #menu-page form {
-	height: 24px;
+	height: 30px;
 	background-color: #e2e2e2;
 }
 
