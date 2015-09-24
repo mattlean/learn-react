@@ -3,7 +3,7 @@
 var NextBtn = React.createClass({
 	render: function() {
 		return (
-			<a href="#" className="button" onClick={this.props.nextPage}>Next &raquo;</a>
+			<a href={this.props.href} className="button" onClick={this.props.navToPage}>Next &raquo;</a>
 		);
 	}
 });
@@ -11,10 +11,11 @@ var NextBtn = React.createClass({
 var PrevBtn = React.createClass({
 	render: function() {
 		return (
-			<a href="#" className="button" onClick={this.props.prevPage}>&laquo; Prev</a>
+			<a href={this.props.href} className="button" onClick={this.props.navToPage}>&laquo; Prev</a>
 		);
 	}
 });
+
 
 /*** CORE COMPONENTS ***/
 // The top header area of the page
@@ -30,18 +31,35 @@ var Header = React.createClass({
 	}
 });
 
-// The content area of the page
+// The content area of the page. Manages routing.
 var Content = React.createClass({
 	getInitialState: function() {
-		return {currPage: <MenuPage nextPage={this.nextPage} />};
+		return {currPage: <MenuPage navToPage={this.navToPage} />};
 	},
 
-	nextPage: function() {
-		this.setState({currPage: <DeliveryPage prevPage={this.prevPage} />});
-	},
+	navToPage: function(event) {
+		event.preventDefault();
 
-	prevPage: function() {
-		this.setState({currPage: <MenuPage nextPage={this.nextPage} />});
+		var shopPaths = ['/', '/delivery', '/payment', '/placeorder'];
+		var newPath = event.target.pathname;
+
+		history.pushState(null,null,newPath);
+
+		for(var path in shopPaths) {
+			if(newPath === shopPaths[0]) {
+				this.setState({currPage: <MenuPage navToPage={this.navToPage} />});
+				break;
+			} else if(newPath === shopPaths[1]) {
+				this.setState({currPage: <DeliveryPage navToPage={this.navToPage} />});
+				break;
+			} else if(newPath === shopPaths[2]) {
+				this.setState({currPage: <PaymentPage navToPage={this.navToPage} />});
+				break;
+			} else if(newPath === shopPaths[3]) {
+				this.setState({currPage: <PlaceOrderPage navToPage={this.navToPage} />});
+				break;
+			}
+		}
 	},
 
 	render: function() {
@@ -54,13 +72,14 @@ var Content = React.createClass({
 });
 
 
-/*** MENU PAGE COMPONENTS ***/
+/*** MENU PAGE ***/
 var MenuPage = React.createClass({
 	render: function() {
 		return (
 			<div className="fit">
+				<h1>Menu</h1>
 				<ProductList url="products.json" />
-				<NextBtn nextPage={this.props.nextPage} />
+				<NextBtn href="delivery" navToPage={this.props.navToPage} />
 			</div>
 		);
 	}
@@ -160,13 +179,72 @@ var ProductFilter = React.createClass({
 });
 
 
-/*** DELIVERY PAGE COMPONENTS ***/
+/*** DELIVERY PAGE ***/
 var DeliveryPage = React.createClass({
 	render: function() {
 		return (
-			<div className="fit">
-				<p>Hello world!</p>
-				<PrevBtn prevPage={this.props.prevPage} />
+			<div id="delivery-page" className="fit">
+				<h1>When do you want your food?</h1>
+				<ul>
+					<li>
+						<label>
+							<input type="radio" name="delivery-time" />
+							<p>As soon as possible!</p>
+						</label>
+					</li>
+					<li>
+						<label>
+							<input type="radio" name="delivery-time" />
+							<input type="date" />
+							<input type="time" />
+						</label>
+					</li>
+				</ul>
+				<PrevBtn href="/" navToPage={this.props.navToPage} />
+				<NextBtn href="/payment" navToPage={this.props.navToPage} />
+			</div>
+		);
+	}
+});
+
+
+/** PAYMENT PAGE **/
+var PaymentPage = React.createClass({
+	render: function() {
+		return (
+			<div id="payment-page" className="fit">
+				<h1>Select a payment method.</h1>
+				<table>
+					<thead>
+						<tr>
+							<td>Your Cards</td>
+							<td>Name On Card</td>
+							<td>Expires On</td>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>Visa ending in 1234</td>
+							<td>Peregrine Robinson</td>
+							<td>01/2020</td>
+						</tr>
+					</tbody>
+				</table>
+				<PrevBtn href="/delivery" navToPage={this.props.navToPage} />
+				<NextBtn href="/placeorder" navToPage={this.props.navToPage} />
+			</div>
+		);
+	}
+});
+
+
+/** PLACE ORDER PAGE **/
+var PlaceOrderPage = React.createClass({
+	render: function() {
+		return (
+			<div id="place-order-page" className="fit">
+				<h1>Review your order.</h1>
+				<PrevBtn href="/payment" navToPage={this.props.navToPage} />
 			</div>
 		);
 	}

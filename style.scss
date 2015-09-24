@@ -1,5 +1,9 @@
 $fit-width: 960px;
 
+input[type="radio"]{
+	vertical-align: baseline;
+}
+
 noscript div {
 	width: $fit-width;
 	margin: 0 auto;
@@ -20,7 +24,7 @@ noscript div {
 	background-color: #ddd;
 }
 
-#product-list {
+#product-list, #delivery-page ul {
 	padding-left: 0;
 	list-style-type: none;
 }
