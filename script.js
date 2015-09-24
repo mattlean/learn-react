@@ -3,7 +3,7 @@ var Header = React.createClass({
 		return (
 			<div id="header">
 				<div className="fit">
-					<h1>React Restaurant Menu</h1>
+					<h1>React Pizzaria</h1>
 				</div>
 			</div>
 		);
@@ -26,6 +26,7 @@ var ProductList = React.createClass({
 	getInitialState: function() {
 		return {data: []};
 	},
+
 	componentDidMount: function() {
 		$.ajax({
 			url: this.props.url,
@@ -39,18 +40,17 @@ var ProductList = React.createClass({
 			}.bind(this)
 		});
 	},
+
 	render: function() {
 		var productNodes = this.state.data.map(function (product) {
 			return (
-				<Product name={product.name}>
-					{product.desc}
-				</Product>
+				<Product name={product.name} desc={product.desc} />
 			);
 		});
 		return (
 			<div id="menu">
 				<ProductFilter />
-				<ul className="product-list">
+				<ul id="product-list">
 					{productNodes}
 				</ul>
 			</div>
@@ -60,18 +60,27 @@ var ProductList = React.createClass({
 
 var Product = React.createClass({
 	getInitialState: function() {
-		return {isChecked: false};
+		return {
+			isOrdered: false,
+			highlightState: ''
+		};
 	},
+
 	handleClick: function(event) {
-		this.setState({isChecked: !this.state.isChecked});
-		console.log(this.state.isChecked);
+		this.state.isOrdered = !this.state.isOrdered;
+		
+		if(this.state.isOrdered) {
+			this.setState({highlightState: 'highlight'});
+		} else {
+			this.setState({highlightState: ''});
+		}
 	},
+	
 	render: function() {
 		return (
-			<li className="product" onClick={this.handleClick}>
-				<input type="checkbox" checked={this.state.isChecked} />
+			<li className={this.state.highlightState} onClick={this.handleClick}>
 				<h2>{this.props.name}</h2>
-				<p>{this.props.children}</p>
+				<p>{this.props.desc}</p>
 			</li>
 		);
 	}
@@ -80,7 +89,7 @@ var Product = React.createClass({
 var ProductFilter = React.createClass({
 	render: function() {
 		return (
-			<div className="product-filter">
+			<div id="product-filter">
 				<input placeholder="Search for food items..."></input>
 			</div>
 		);

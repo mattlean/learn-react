@@ -10,3 +10,20 @@
 #content {
 	background-color: #ddd;
 }
+
+#product-list {
+	padding-left: 0;
+	list-style-type: none;
+}
+
+#product-list li {
+	background-color: green;
+}
+
+#product-list li.highlight {
+	background-color: blue;
+}
+
+#product-list li input {
+	display: none;
+}
