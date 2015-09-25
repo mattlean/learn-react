@@ -24,6 +24,8 @@ Because the app uses AJAX, the app must be hosted on a server. You can upload th
 
 If you don't want to deal with all of the dependency setup, you can download the prepackaged source with all of the dependencies ready [here](http://mattlean.com/downloads/learn-react.zip).
 
+If you don't want to deal with any of this, you can just view the [live version here](http://learnreact.mattlean.com). ;)
+
 The project uses [npm](https://docs.npmjs.com/getting-started/installing-node), [Bower](http://bower.io/#getting-started), and [Grunt](http://gruntjs.com/getting-started), so you will need those to get the project environment running.
 
 Once they are installed, to install the dependencies all you need to do is run the following commands in this order:
