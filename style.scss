@@ -221,3 +221,25 @@ noscript div {
 	float: right;
 	font-weight: bold;
 }
+
+.page-appear {
+	opacity: 0.01;
+	transform: translateY(-100px);
+	transition: all .5s cubic-bezier(0,.97,.98,.99);
+}
+
+.page-appear.page-appear-active {
+	opacity: 1;
+	transform: translateY(0);
+}
+
+.page-leave {
+	opacity: 1;
+	transform: translateY(0);
+}
+
+.page-leave.page-leave-active {
+	opacity: 0.01;
+	transform: translateY(-100px);
+	transition: all .5s cubic-bezier(0,.97,.98,.99);
+}

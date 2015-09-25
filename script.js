@@ -1,4 +1,6 @@
 /*** GENERAL COMPONENTS ***/
+var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
+
 // Button that moves to next page
 var NextBtn = React.createClass({
 	navToPage: function(event) {
@@ -94,7 +96,7 @@ var Content = React.createClass({
 	render: function() {
 		return (
 			<div id="content">
-				{this.state.currPage}
+					{this.state.currPage}
 			</div>
 		);
 	}
@@ -105,11 +107,13 @@ var Content = React.createClass({
 var MenuPage = React.createClass({
 	render: function() {
 		return (
+			<ReactCSSTransitionGroup transitionName="page" transitionAppear={true}>
 			<div id="menu-page" className="fit">
 				<div id="page-header"><h1>Menu</h1></div>
 				<ProductList url="products.json" />
 				<NextBtn href="delivery" navToPage={this.props.navToPage} />
 			</div>
+			</ReactCSSTransitionGroup>
 		);
 	}
 });
@@ -221,10 +225,12 @@ var ProductFilter = React.createClass({
 var DeliveryPage = React.createClass({
 	render: function() {
 		return (
-			<div id="delivery-page" className="fit">
-				<div id="page-header"><h1>Delivery</h1></div>
-				<DeliveryForm navToPage={this.props.navToPage} />
-			</div>
+			<ReactCSSTransitionGroup transitionName="page" transitionAppear={true}>
+				<div id="delivery-page" className="fit">
+					<div id="page-header"><h1>Delivery</h1></div>
+					<DeliveryForm navToPage={this.props.navToPage} />
+				</div>
+			</ReactCSSTransitionGroup>
 		);
 	}
 });
@@ -329,10 +335,12 @@ var DeliveryForm = React.createClass({
 var PaymentPage = React.createClass({
 	render: function() {
 		return (
-			<div id="payment-page" className="fit">
-				<div id="page-header"><h1>Payment</h1></div>
-				<PaymentForm navToPage={this.props.navToPage} />
-			</div>
+			<ReactCSSTransitionGroup transitionName="page" transitionAppear={true}>
+				<div id="payment-page" className="fit">
+					<div id="page-header"><h1>Payment</h1></div>
+					<PaymentForm navToPage={this.props.navToPage} />
+				</div>
+			</ReactCSSTransitionGroup>
 		);
 	}
 });
@@ -362,7 +370,7 @@ var PaymentForm = React.createClass({
 					</thead>
 					<tbody>
 						<tr>
-							<td><input type="radio" value="Visa 1234" name="card" onClick={this.cardSelect} defaultChecked={true} required />Visa ending in 1234</td>
+							<td><input type="radio" value="Visa 1234" name="card" onClick={this.cardSelect} required />Visa ending in 1234</td>
 							<td>Peregrine Robinson</td>
 							<td>01/2020</td>
 						</tr>
@@ -436,20 +444,22 @@ var PlaceOrderPage = React.createClass({
 		}
 
 		return (
-			<div id="place-order-page" className="fit">
-				<div id="page-header"><h1>Review Your Order</h1></div>
-				<div id="order-summary">
-					<h2>You ordered...</h2>
-					<OrderList orders={this.state.orders} />
-					<h2>We are delivering to...</h2>
-					<p>{this.state.name} at {this.state.phone} at the following address at {this.state.time}:</p>
-					<p>{address}, {this.state.city}, {this.state.region}, {this.state.zip}</p>
-					<h2>You are paying with...</h2>
-					<p>{this.state.card}</p>
-					<PrevBtn href="/payment" navToPage={this.props.navToPage} />
-					<button id="place-order-btn" onClick={this.flucYeah}>Place Order</button>
+			<ReactCSSTransitionGroup transitionName="page" transitionAppear={true}>
+				<div id="place-order-page" className="fit">
+					<div id="page-header"><h1>Review Your Order</h1></div>
+					<div id="order-summary">
+						<h2>You ordered...</h2>
+						<OrderList orders={this.state.orders} />
+						<h2>We are delivering to...</h2>
+						<p>{this.state.name} at {this.state.phone} at the following address at {this.state.time}:</p>
+						<p>{address}, {this.state.city}, {this.state.region}, {this.state.zip}</p>
+						<h2>You are paying with...</h2>
+						<p>{this.state.card}</p>
+						<PrevBtn href="/payment" navToPage={this.props.navToPage} />
+						<button id="place-order-btn" onClick={this.flucYeah}>Place Order</button>
+					</div>
 				</div>
-			</div>
+				</ReactCSSTransitionGroup>
 		);
 	}
 });
