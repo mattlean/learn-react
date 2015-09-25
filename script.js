@@ -422,7 +422,11 @@ var PlaceOrderPage = React.createClass({
 	},
 
 	flucYeah: function() {
-		alert('fluc yeah!');
+		if(localStorage.getItem('total') <= 0) {
+			alert('You did not order anything... or are you on a diet?')
+		} else {
+			alert('fluc yeah!')
+		}
 	},
 
 	render: function() {
@@ -452,14 +456,31 @@ var PlaceOrderPage = React.createClass({
 
 // The list of orders
 var OrderList = React.createClass({
+	totalCost: function() {
+		var total = 0;
+
+		for(var order in this.props.orders) {
+			numOrders = parseFloat(this.props.orders[order]['num']);
+			cost = parseFloat(this.props.orders[order]['cost']);
+			
+			var itemTotal = cost * numOrders;
+			console.log(itemTotal);
+			total += itemTotal;
+		}
+
+		localStorage.setItem('total', total);
+		return total.toFixed(2);
+	},
+
 	render: function() {
 		orderArray = [];
 
 		for(var order in this.props.orders) {
-			if(this.props.orders[order].ordered === true) {
+			if(this.props.orders[order].num > 0) {
 				var newObject = {
 					'name': order,
-					'data': this.props.orders[order]
+					'num': this.props.orders[order]['num'],
+					'cost': this.props.orders[order]['cost']
 				};
 				orderArray.push(newObject);
 			}
@@ -467,12 +488,13 @@ var OrderList = React.createClass({
 
 		var orderNodes = orderArray.map(function (order) {
 			return (
-				<Order name={order.name} />
+				<Order name={order.name} num={order.num} cost={order.cost} />
 			);
 		});
 		return (
 			<ul id="order-list">
 				{orderNodes}
+				<p className="total">Total: ${this.totalCost()}</p>
 			</ul>
 		);
 	}
@@ -481,8 +503,14 @@ var OrderList = React.createClass({
 // An individual order
 var Order = React.createClass({
 	render: function() {
+		var orderWord = 'orders';
+
+		if(this.props.num === '1') {
+			orderWord = 'order'
+		}
+
 		return (
-			<li>{this.props.name}</li>
+			<li>{this.props.num} {orderWord} of {this.props.name} each for ${this.props.cost}</li>
 		);
 	}
 });
