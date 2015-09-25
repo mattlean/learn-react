@@ -40,6 +40,7 @@ thead {
 
 tbody tr {
 	background-color: #dcdcdc;
+	transition: background-color .3s cubic-bezier(0,.97,.98,.99);
 }
 
 tbody tr:nth-child(odd) {
@@ -60,6 +61,7 @@ button, input[type='submit'] {
 	text-transform: uppercase;
 	background-color: #e74c32;
 	color: #fafafa;
+	transition: background-color .3s cubic-bezier(0,.97,.98,.99);
 }
 
 button:hover, input[type='submit']:hover {
@@ -152,11 +154,11 @@ noscript div {
 	padding: 10px 30px 9px;
 	background-color: #fafafa;
 	border-bottom: 1px solid #fafafa;
-	cursor: pointer;
+	transition: background-color .3s cubic-bezier(0,.97,.98,.99);
 }
 
 #product-list li:nth-child(odd) {
-	background: #f7f7f7;
+	background-color: #f7f7f7;
 	border-bottom: 1px solid #f7f7f7;
 }
 

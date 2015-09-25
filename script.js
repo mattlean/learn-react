@@ -443,6 +443,8 @@ var PlaceOrderPage = React.createClass({
 			address += ', ' + this.state.addressLine2;
 		}
 
+		console.log(this.state.orders);
+
 		return (
 			<ReactCSSTransitionGroup transitionName="page" transitionAppear={true}>
 				<div id="place-order-page" className="fit">
@@ -470,11 +472,14 @@ var OrderList = React.createClass({
 		var total = 0;
 
 		for(var order in this.props.orders) {
+			if(this.props.orders[order]['num'] === '' || this.props.orders[order]['num'] === null) {
+				continue;
+			}
+
 			numOrders = parseFloat(this.props.orders[order]['num']);
 			cost = parseFloat(this.props.orders[order]['cost']);
 			
 			var itemTotal = cost * numOrders;
-			console.log(itemTotal);
 			total += itemTotal;
 		}
 
