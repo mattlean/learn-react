@@ -294,7 +294,7 @@ var DeliveryForm = React.createClass({
 					<input type="text" name="state" onChange={this.addressSet} defaultValue={this.state.region} required />
 				</label>
 				<label>
-					ZIP
+					ZIP Code:
 					<input type="number" name="zip" onChange={this.addressSet} defaultValue={this.state.zip} required />
 				</label>
 				<h2>When do you want your food?</h2>
@@ -313,8 +313,10 @@ var DeliveryForm = React.createClass({
 						</label>
 					</li>
 				</ul>
-				<PrevBtn navToPage={this.props.navToPage} />
-				<input type="submit" value="Next &raquo;" />
+				<div className="footer">
+					<PrevBtn navToPage={this.props.navToPage} />
+					<input type="submit" value="Next &raquo;" />
+				</div>
 			</form>
 		);
 	}
@@ -374,8 +376,10 @@ var PaymentForm = React.createClass({
 						</tr>
 					</tbody>
 				</table>
-				<PrevBtn navToPage={this.props.navToPage} />
-				<input type="submit" value="Next &raquo;" />
+				<div className="footer">
+					<PrevBtn navToPage={this.props.navToPage} />
+					<input type="submit" value="Next &raquo;" />
+				</div>
 			</form>
 		);
 	}

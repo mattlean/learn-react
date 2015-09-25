@@ -3,6 +3,7 @@ $fit-width: 960px;
 /* GENERAL STYLES */
 body {
 	font-family: 'Roboto', sans-serif;
+	font-size: 1.04em;
 	background-color: #eee;
 	color: #222;
 }
@@ -39,8 +40,23 @@ button:hover, input[type='submit']:hover {
 	background-color: #dd622f;
 }
 
+input {
+	margin-bottom: 12px;
+	display: block;
+}
+
 input[type='submit'] {
 	float: right;
+}
+
+input[type='radio'] {
+	float: left;
+	margin: 4px 24px 0 0;
+}
+
+input[type='date'], input[type='time'] {
+	margin-right: 4px;
+	display: inline-block;
 }
 
 form {
@@ -67,6 +83,10 @@ noscript div {
 	text-transform: uppercase;
 	background-color: #303038;
 	color: #fefefe;
+}
+
+.footer {
+	margin-top: 40px;
 }
 
 
