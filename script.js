@@ -303,7 +303,7 @@ var DeliveryForm = React.createClass({
 				<ul>
 					<li>
 						<label>
-							<input type="radio" value="ASAP" name="delivery-time" onClick={this.timeSelect} required />
+							<input type="radio" value="ASAP" name="delivery-time" onClick={this.timeSelect} defaultChecked={true} required />
 							<p>As soon as possible!</p>
 						</label>
 					</li>
@@ -362,7 +362,7 @@ var PaymentForm = React.createClass({
 					</thead>
 					<tbody>
 						<tr>
-							<td><input type="radio" value="Visa 1234" name="card" onClick={this.cardSelect} required />Visa ending in 1234</td>
+							<td><input type="radio" value="Visa 1234" name="card" onClick={this.cardSelect} defaultChecked={true} required />Visa ending in 1234</td>
 							<td>Peregrine Robinson</td>
 							<td>01/2020</td>
 						</tr>
