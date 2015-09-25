@@ -297,7 +297,7 @@ var DeliveryForm = React.createClass({
 				</label>
 				<label>
 					ZIP Code:
-					<input type="number" name="zip" onChange={this.addressSet} defaultValue={this.state.zip} required />
+					<input type="number" min="0" name="zip" onChange={this.addressSet} defaultValue={this.state.zip} required />
 				</label>
 				<h2>When do you want your food?</h2>
 				<ul>
