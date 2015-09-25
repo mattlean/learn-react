@@ -41,6 +41,7 @@ Now you should be able to view the app in the browser at this URI: [http://local
 
 ### To-Do List
 * Make better forms that function consistently across browsers
+* Assign appropriate date and time for deliveries scheduled for the future
 * Style forms
 * Animated checkout progress bar at top-right corner
 * SASS mixins for better browser compatibility on CSS3 properties that require browser prefixes
@@ -49,3 +50,5 @@ Now you should be able to view the app in the browser at this URI: [http://local
 * Have pop-up with add-on items for customizable items (ex. customized pizza toppings)
 * Responsive image to go with each food item
 * Use better routing system like [react-router](https://github.com/rackt/react-router)
+* Cards should be loaded from a server based off user session
+* Product filtering
