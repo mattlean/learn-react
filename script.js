@@ -439,7 +439,7 @@ var PlaceOrderPage = React.createClass({
 
 	render: function() {
 		var address = this.state.addressLine1;
-		if(this.state.addressLine2 != '') {
+		if(this.state.addressLine2 !== '' && this.state.addressLine2 !== null) {
 			address += ', ' + this.state.addressLine2;
 		}
 
