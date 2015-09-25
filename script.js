@@ -367,12 +367,17 @@ var PaymentForm = React.createClass({
 						<tr>
 							<td><input type="radio" value="Mastercard 4567" name="card" onClick={this.cardSelect} required />Mastercard ending in 4567</td>
 							<td>Peregrine Robinson</td>
-							<td>01/2020</td>
+							<td>02/2020</td>
 						</tr>
 						<tr>
 							<td><input type="radio" value="Discover 8901" name="card" onClick={this.cardSelect} required />Discover ending in 8901</td>
 							<td>Peregrine Robinson</td>
-							<td>01/2020</td>
+							<td>03/2020</td>
+						</tr>
+						<tr>
+							<td><input type="radio" value="American Express 2345" name="card" onClick={this.cardSelect} required />American Express ending in 8901</td>
+							<td>Peregrine Robinson</td>
+							<td>04/2020</td>
 						</tr>
 					</tbody>
 				</table>
@@ -414,6 +419,10 @@ var PlaceOrderPage = React.createClass({
 		};
 	},
 
+	flucYeah: function() {
+		alert('fluc yeah!');
+	},
+
 	render: function() {
 		var address = this.state.addressLine1;
 		if(this.state.addressLine2 != '') {
@@ -432,6 +441,7 @@ var PlaceOrderPage = React.createClass({
 					<h2>You are paying with...</h2>
 					<p>{this.state.card}</p>
 					<PrevBtn href="/payment" navToPage={this.props.navToPage} />
+					<button id="place-order-btn" onClick={this.flucYeah}>Place Order</button>
 				</div>
 			</div>
 		);
