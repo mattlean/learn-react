@@ -28,6 +28,28 @@ ul {
 	margin: 0;
 }
 
+table {
+	margin: 10px auto;
+}
+
+thead {
+	text-transform: uppercase;
+	background-color: #929292;
+	color: #fafafa;
+}
+
+tbody tr {
+	background-color: #dcdcdc;
+}
+
+tbody tr:nth-child(odd) {
+	background: #f1f1f1;
+}
+
+td {
+	padding: 10px 20px;
+}
+
 button, input[type='submit'] {
 	padding: 6px 8px;
 	border: none;
