@@ -138,7 +138,7 @@ var ProductList = React.createClass({
 	render: function() {
 		var productNodes = this.state.data.map(function (product) {
 			return (
-				<Product name={product.name} desc={product.desc} />
+				<Product name={product.name} desc={product.desc} cost={product.cost} />
 			);
 		});
 		return (
@@ -155,49 +155,51 @@ var ProductList = React.createClass({
 var Product = React.createClass({
 	getInitialState: function() {
 		var orders = JSON.parse(localStorage.getItem('orders'));
+		var initNum = 0;
 		var initHighlightState = '';
-		var initIsOrdered = false;
 
 		// Load the stored values from localStorage if there are any
-		if(orders !== null && orders[this.props.name] !== undefined) {
-			if(orders[this.props.name].ordered) {
-				initIsOrdered = true;
-				initHighlightState = 'highlight';
-			}
+		if(orders !== null && orders[this.props.name] !== undefined && orders[this.props.name]['num'] > 0) {
+			initNum = orders[this.props.name]['num'];
+			initHighlightState = 'highlight';
 		}
 
 		return {
-			isOrdered: initIsOrdered,
+			num: initNum,
 			highlightState: initHighlightState
 		};
 	},
 
-	// Controls style of button depending on its highlightState
-	highlightCtrl: function() {
-		this.setState({isOrdered: !this.state.isOrdered}, function() {
-			if(this.state.isOrdered) {
-				this.setState({highlightState: 'highlight'});
-			} else {
-				this.setState({highlightState: ''});
-			}
+	updateOrder: function(event) {
+		var orders = JSON.parse(localStorage.getItem('orders'));
 
-			// Creates JSON object to store all orders
-			var orders = JSON.parse(localStorage.getItem('orders'));
+		if(orders === null) {
+			orders = {};
+		}
 
-			if(orders === null) {
-				orders = {};
-			}
+		orders[this.props.name] = {};
+		orders[this.props.name]['num'] = event.target.value;
+		orders[this.props.name]['cost'] = this.props.cost;
+		localStorage.setItem('orders', JSON.stringify(orders));
 
-			orders[this.props.name] = {'ordered': this.state.isOrdered};
-			localStorage.setItem('orders', JSON.stringify(orders));
-		});
+		// Highlight item if ordered
+		if(orders[this.props.name]['num'] > 0) {
+			this.setState({highlightState: 'highlight'});
+		} else {
+			this.setState({highlightState: ''});
+		}
 	},
 
 	render: function() {
 		return (
-			<li className={this.state.highlightState} onClick={this.highlightCtrl}>
+			<li className={this.state.highlightState}>
 				<h2>{this.props.name}</h2>
 				<p>{this.props.desc}</p>
+				<div className="order-cost">
+					<p><b>${this.props.cost}</b></p>
+					<p>Orders:</p>
+					<input type="number" min="0" defaultValue={this.state.num} onChange={this.updateOrder}/>
+				</div>
 			</li>
 		);
 	}

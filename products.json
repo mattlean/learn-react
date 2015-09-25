@@ -1,5 +1,5 @@
 [
-	{"name": "Pepperoni Pizza", "desc": "The classic pepperoni pizza."},
-	{"name": "Cheese Pizza", "desc": "The classic cheese pizza."},
-	{"name": "Caesar Salad", "desc": "The classic caesar salad."}
+	{"name": "Pepperoni Pizza", "desc": "The classic pepperoni pizza.", "cost": "12.50"},
+	{"name": "Cheese Pizza", "desc": "The classic cheese pizza.", "cost": "10.00"},
+	{"name": "Caesar Salad", "desc": "The classic caesar salad.", "cost": "7.00"}
 ]

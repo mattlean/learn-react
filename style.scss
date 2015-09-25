@@ -46,6 +46,10 @@ tbody tr:nth-child(odd) {
 	background: #f1f1f1;
 }
 
+tbody tr:hover {
+	background: #fbfbfb;
+}
+
 td {
 	padding: 10px 20px;
 }
@@ -160,6 +164,21 @@ noscript div {
 
 #product-list p {
 	color: #555;
+}
+
+.order-cost {
+	margin-top: -80px;
+	float: right;
+	text-align: center;
+}
+
+.order-cost p {
+	margin-bottom: 4px;
+}
+
+.order-cost input {
+	width: 50px;
+	text-align: right;
 }
 
 #menu-page form {
