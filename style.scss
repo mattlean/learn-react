@@ -98,7 +98,7 @@ noscript div {
 
 .fit {
 	max-width: $fit-width;
-	margin: 0 auto;
+	margin: 0 auto 16px;
 	padding: 0;
 	background-color: #fafafa;
 }
@@ -160,7 +160,7 @@ noscript div {
 	border-bottom: 1px solid #f7f7f7;
 }
 
-#product-list li.highlight {
+#product-list li.highlight, #product-list li.highlight:hover {
 	background-color: #fffcb6;
 }
 
@@ -248,4 +248,14 @@ noscript div {
 	opacity: 0.01;
 	transform: translateY(-100px);
 	transition: all .5s cubic-bezier(0,.97,.98,.99);
+}
+
+@media (max-width: 460px) {
+	body {
+		font-size: 0.66em;
+	}
+
+	.order-cost {
+		margin-top: -60px;
+	}
 }
