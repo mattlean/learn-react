@@ -1,5 +1,11 @@
 [
-	{"name": "Pepperoni Pizza", "desc": "The classic pepperoni pizza.", "cost": "12.50"},
-	{"name": "Cheese Pizza", "desc": "The classic cheese pizza.", "cost": "10.00"},
-	{"name": "Caesar Salad", "desc": "The classic caesar salad.", "cost": "7.00"}
+	{"name": "Pepperoni Pizza", "desc": "The classic pepperoni pizza.", "cost": "10.00"},
+	{"name": "Italian Sausage Pizza", "desc": "A pizza with italian sausage.", "cost": "10.00"},
+	{"name": "Hawaiian Pizza", "desc": "A pizza with pineapple and canadian bacon.", "cost": "12.50"},
+	{"name": "Combo Pizza", "desc": "A pizza with all of the toppings.", "cost": "12.50"},
+	{"name": "Veggie Pizza", "desc": "A pizza with only vegetables.", "cost": "10.00"},
+	{"name": "Cheese Pizza", "desc": "The classic cheese pizza.", "cost": "9.00"},
+	{"name": "Caesar Salad", "desc": "An amazing caesar salad.", "cost": "7.00"},
+	{"name": "Buffalo Wings", "desc": "12 tasty buffalo wings with BBQ sauce.", "cost": "10.00"},
+	{"name": "Brownie Melts", "desc": "Buy this or you will regret your life.", "cost": "99.99"}
 ]
