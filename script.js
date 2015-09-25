@@ -423,7 +423,7 @@ var PlaceOrderPage = React.createClass({
 
 	flucYeah: function() {
 		if(localStorage.getItem('total') <= 0) {
-			alert('You did not order anything... or are you on a diet?')
+			alert('You have to order something so we have something to deliver! :P')
 		} else {
 			alert('fluc yeah!')
 		}
@@ -486,11 +486,18 @@ var OrderList = React.createClass({
 			}
 		}
 
-		var orderNodes = orderArray.map(function (order) {
-			return (
-				<Order name={order.name} num={order.num} cost={order.cost} />
-			);
-		});
+		var orderNodes;
+
+		if(orderArray.length === 0) {
+			orderNodes = '...nothing. Are you on a diet?'
+		} else {
+			orderNodes = orderArray.map(function (order) {
+				return (
+					<Order name={order.name} num={order.num} cost={order.cost} />
+				);
+			});
+		}
+
 		return (
 			<ul id="order-list">
 				{orderNodes}
