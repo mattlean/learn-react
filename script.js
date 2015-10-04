@@ -11,10 +11,22 @@ var CommentBox = React.createClass({
 });
 
 var CommentList = React.createClass({
+	getDefaultProps: function() {
+		return {data: []};
+	},
+
 	render: function() {
+		var commentNodes = this.props.data.map(function(comment) {
+				return (
+					<Comment author={comment.author}>
+					{comment.text}
+					</Comment>
+					);
+			});
+		
 		return (
 			<div className="commentList">
-				<Comment author="Pete Hunt">This is one comment</Comment>
+				{commentNodes}
 			</div>
 		);
 	}
@@ -22,9 +34,14 @@ var CommentList = React.createClass({
 
 var CommentForm = React.createClass({
 	render: function() {
+		var data = [
+			{author: 'Peter Hunt', text: 'First comment'},
+			{author: 'Jordan Walke', text: '2nd comment'}
+		];
+
 		return (
 			<div className="commentForm">
-				I am a commentform!
+				<CommentList data={data} />
 			</div>
 		);
 	}
