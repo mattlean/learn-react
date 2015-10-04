@@ -1,14 +1,8 @@
 var CommentBox = React.createClass({
 	render: function() {
-		var data = [
-			{author: 'Peter Hunt', text: 'First comment'},
-			{author: 'Jordan Walke', text: '2nd comment'}
-		];
-
 		return (
 			<div className="commentBox">
 				<h1>Comments</h1>
-				<CommentList data={data} />
 				<CommentAdd />
 			</div>
 		);
@@ -38,14 +32,25 @@ var CommentList = React.createClass({
 });
 
 var CommentAdd = React.createClass({
+	getInitialState: function() {
+		return {data: [
+			{author: 'Peter Hunt', text: 'First comment'},
+			{author: 'Jordan Walke', text: '2nd comment'}
+		]};
+	},
+
 	handleClick: function(e) {
 		e.preventDefault();
-		console.log('clicked');
+		var newData = this.state.data;
+		newData.push({author: 'lol', text: 'lolol'});
+		console.log(newData);
+		this.setState({data: newData});
 	},
 
 	render: function() {
 		return (
 			<div className="commentAdd">
+				<CommentList data={this.state.data} />
 				<button onClick={this.handleClick}>Add new</button>
 			</div>
 		);
