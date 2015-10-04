@@ -1,10 +1,15 @@
 var CommentBox = React.createClass({
 	render: function() {
+		var data = [
+			{author: 'Peter Hunt', text: 'First comment'},
+			{author: 'Jordan Walke', text: '2nd comment'}
+		];
+
 		return (
 			<div className="commentBox">
 				<h1>Comments</h1>
-				<CommentList />
-				<CommentForm />
+				<CommentList data={data} />
+				<CommentAdd />
 			</div>
 		);
 	}
@@ -32,16 +37,16 @@ var CommentList = React.createClass({
 	}
 });
 
-var CommentForm = React.createClass({
-	render: function() {
-		var data = [
-			{author: 'Peter Hunt', text: 'First comment'},
-			{author: 'Jordan Walke', text: '2nd comment'}
-		];
+var CommentAdd = React.createClass({
+	handleClick: function(e) {
+		e.preventDefault();
+		console.log('clicked');
+	},
 
+	render: function() {
 		return (
-			<div className="commentForm">
-				<CommentList data={data} />
+			<div className="commentAdd">
+				<button onClick={this.handleClick}>Add new</button>
 			</div>
 		);
 	}
